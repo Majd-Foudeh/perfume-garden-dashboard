@@ -30,6 +30,7 @@ const {refresh,setRefresh} = useContext(RefreshContext)
       <div className="grid grid-cols-1 gap-4">
         <TableOfHistory setRefresh={setRefresh} refresh={refresh} />
       </div>
+     
     </main>
   );
 };

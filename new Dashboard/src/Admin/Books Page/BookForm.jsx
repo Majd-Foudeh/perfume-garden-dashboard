@@ -1,31 +1,26 @@
 /* eslint-disable react/prop-types */
 
-import axios from "axios";
-import { useState } from "react";
+import axios from 'axios';
+import { useState } from 'react';
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import { IoAddCircleOutline } from "react-icons/io5";
-import { MdOutlineCancel } from "react-icons/md";
-
+import { IoAddCircleOutline } from 'react-icons/io5';
+import { MdOutlineCancel } from 'react-icons/md';
 
 // import 'dotenv/config'
-export const BookForm = ({ setRefresh ,refresh}) => {
+export const BookForm = ({ setRefresh, refresh }) => {
   const notifySuccess = (msg) => toast.success(msg);
   const notifyError = (msg) => toast.error(msg);
 
   const [show, setShow] = useState(false);
-  const [bookInfo, setInfo] = useState({
-    name: "",
-    description: "",
-    price: "",
-    category: "",
-    ratings: "",
-    quantity: "",
-    pages: "",
-    author: "",
-    img: "",
+  const [perfumeInfo, setPerfumeInfo] = useState({
+    perfume_name: '',
+    category: '',
+    price: '',
+    description: '',
+    img: '',
   });
 
   const handleChange = (event) => {
@@ -36,19 +31,27 @@ export const BookForm = ({ setRefresh ,refresh}) => {
     }));
   };
   const handleSubmit = async (event) => {
-    console.log("drobi");
+    console.log('drobi');
 
     try {
       event.preventDefault();
 
+      const newPerfume = {
+        perfume_name: perfumeInfo.perfume_name,
+        perfume_category: perfumeInfo.category,
+        price: perfumeInfo.price,
+        description: perfumeInfo.description,
+        perfume_picture: perfumeInfo.img,
+      };
+
       const data = await axios.post(
-        "http://localhost:8800/addproduct",
-        bookInfo
+        'http://localhost:4000/addPerfume',
+        newPerfume
       );
-      notifySuccess("book added success");
+      notifySuccess('perfume added success');
       setRefresh(!refresh);
 
-      console.log("added success", data.data);
+      console.log('added success', data.data);
     } catch (err) {
       console.log(err);
       notifyError(err.message);
@@ -61,7 +64,7 @@ export const BookForm = ({ setRefresh ,refresh}) => {
   return (
     <>
       <div className="flex items-center gap-5">
-        <h1 className="text-[30px] font-bold py-2">Add New Book</h1>
+        <h1 className="text-[30px] font-bold py-2">Add New Perfume</h1>
         {!show ? (
           <div className="tooltip tooltip-primary" data-tip=" add new book">
             <button
@@ -89,15 +92,19 @@ export const BookForm = ({ setRefresh ,refresh}) => {
             {/*  */}
             <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text">Book Title</span>
+                <span className="label-text">Perfume Name</span>
               </label>
               <input
                 type="text"
-                name="name"
+                name="perfume_name"
                 placeholder="Type here"
                 className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookInfo.name}
-                onChange={handleChange}
+                onChange={(e) => {
+                  setPerfumeInfo({
+                    ...perfumeInfo,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
               />
             </div>
             {/*  */}
@@ -110,22 +117,30 @@ export const BookForm = ({ setRefresh ,refresh}) => {
                 name="category"
                 placeholder="Type here"
                 className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookInfo.category}
-                onChange={handleChange}
+                onChange={(e) => {
+                  setPerfumeInfo({
+                    ...perfumeInfo,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
               />
             </div>
             {/*  */}
             <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text">author</span>
+                <span className="label-text">Price For ml</span>
               </label>
               <input
-                type="text"
-                name="author"
+                type="number"
+                name="price"
                 placeholder="Type here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookInfo.author}
-                onChange={handleChange}
+                className="input input-sm  border-[#aaa831] w-full max-w-xs"
+                onChange={(e) => {
+                  setPerfumeInfo({
+                    ...perfumeInfo,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
               />
             </div>
             {/*  */}
@@ -137,72 +152,16 @@ export const BookForm = ({ setRefresh ,refresh}) => {
                 type="text"
                 name="description"
                 placeholder="Type here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookInfo.description}
-                onChange={handleChange}
-              />
+                className="input input-sm  border-[#9b9103] w-full max-w-xs"
+                onChange={(e) => {
+                  setPerfumeInfo({
+                    ...perfumeInfo,
+                    [e.target.name]: e.target.value,
+                  });
+                }}              />
             </div>
-            {/*  */}
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Price</span>
-              </label>
-              <input
-                type="number"
-                min="0"
-                name="price"
-                placeholder="0"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookInfo.price}
-                onChange={handleChange}
-              />
-            </div>
-            {/*  */}
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Quantity</span>
-              </label>
-              <input
-                type="number"
-                min="0"
-                name="quantity"
-                placeholder="0"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookInfo.quantity}
-                onChange={handleChange}
-              />
-            </div>
-            {/*  */}
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Rating</span>
-              </label>
-              <input
-                type="number"
-                min="0"
-                max="5"
-                name="ratings"
-                placeholder="0"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookInfo.ratings}
-                onChange={handleChange}
-              />
-            </div>
-            {/*  */}
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Pages</span>
-              </label>
-              <input
-                type="number"
-                min="0"
-                name="pages"
-                placeholder="0"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookInfo.pages}
-                onChange={handleChange}
-              />
-            </div>
+           
+            
             {/*  */}
             <div className="form-control w-full max-w-xs">
               <label className="label">
@@ -211,8 +170,12 @@ export const BookForm = ({ setRefresh ,refresh}) => {
 
               <input
                 name="img"
-                onChange={handleChange}
-                type="text"
+                onChange={(e) => {
+                  setPerfumeInfo({
+                    ...perfumeInfo,
+                    [e.target.name]: e.target.value,
+                  });
+                }}                type="text"
                 className="input input-sm  border-[#529b03] w-full max-w-xs"
               />
             </div>

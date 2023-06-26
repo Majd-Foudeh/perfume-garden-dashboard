@@ -1,10 +1,11 @@
 // 1- calling the model
-const user = require('../models/userModel')
-const bcrypt = require('bcryptjs')
-const utils =  require('../utils')
+const user = require('../models/userModel');
+const bcrypt = require('bcryptjs');
+const utils = require('../utils');
 const allUsers = (req, res) => {
   // select * from users  =     find();
-  user.find()
+  user
+    .find({ isDeleted: false })
     .then((data) => {
       // console.log(data);
       res.status(200).json(data);
@@ -16,7 +17,7 @@ const allUsers = (req, res) => {
 
 const signin = async (req, res) => {
   const signinUser = await User.findOne({
-    email: req.body.email
+    email: req.body.email,
   });
   if (signinUser) {
     res.send({
@@ -29,15 +30,15 @@ const signin = async (req, res) => {
   } else {
     res.status(401).send({ message: 'Invalid Email or Password.' });
   }
-}
+};
 const signup = async (req, res) => {
-  const newUser =  new User({
-    name:req.body.name,
+  const newUser = new User({
+    name: req.body.name,
     email: req.body.email,
-    password: bcrypt.hashSync( req.body.password)
+    password: bcrypt.hashSync(req.body.password),
   });
 
-  const user = await newUser.save()
+  const user = await newUser.save();
   res.send({
     _id: user.id,
     name: user.name,
@@ -45,16 +46,29 @@ const signup = async (req, res) => {
     isAdmin: user.isAdmin,
     token: utils.getToken(user),
   });
-  
-    // res.status(401).send({ message: 'Invalid Email or Password.' });
-  
-}
 
+  // res.status(401).send({ message: 'Invalid Email or Password.' });
+};
 
+const deleteUser =  (req, res) => {
+  try {
+    console.log('this is the koos id', req.params.id);
+    const User = user.findById(
+      req.params.id
+    );
+    if (!User) {
+      return res.status(404).json({ error: 'user not found' });
+    }
+
+    res.json(User);
+  } catch (error) {
+    console.error('error in delete the user', error);
+  }
+};
 
 module.exports = {
   allUsers,
   signin,
-  signup
-  
+  signup,
+  deleteUser,
 };

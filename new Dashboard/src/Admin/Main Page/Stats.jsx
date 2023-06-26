@@ -11,18 +11,19 @@ import {FaDonate } from 'react-icons/fa';
 import { ImBooks } from "react-icons/im";
 import { BsPerson } from "react-icons/bs";
 import { RiChatQuoteLine } from "react-icons/ri";
+import { GiDelicatePerfume } from 'react-icons/gi';
 
 
 
 export const Stats = (props) => {
 
-  const [books, setBooks] = useState([]);
+  const [perfumes, setPerfumes] = useState([]);
   // get total of donors
   useEffect(() => {
     axios
-      .get("http://localhost:8800/allproducts")
+      .get("http://localhost:4000/allPerfumes")
       .then((response) => {
-        setBooks(response.data);
+        setPerfumes(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -30,12 +31,12 @@ export const Stats = (props) => {
   }, [props.refresh]);
 
   // get total orgs
-  const [writers , setWriters] = useState([]);
+  const [users , setUsers] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:8800/showwriters")
+      .get("http://localhost:4000/users")
       .then((response) => {
-        setWriters(response.data);
+        setUsers(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -79,19 +80,19 @@ const [orders, setOrders] = useState([]);
   return (
     <div className="stats stats-vertical xl:stats-horizontal md:stats-horizontal bg-white shadow-lg ">
       <div className="stat">
-        <div className="stat-title  text-[#529b03] font-bold">Total Books</div>
-        <div className="stat-value text-[#529b03]">{books.length}</div>
-        <div className="stat-figure text-[#529b03]">
-          <ImBooks className="text-[40px]" />
+        <div className="stat-title  text-black font-bold">Total Perfumes</div>
+        <div className="stat-value text-[#ffc107]">{perfumes.length}</div>
+        <div className="stat-figure text-[#ffc107]">
+          <GiDelicatePerfume className="text-[40px]" />
         </div>
       </div>
 
       <div className="stat">
-        <div className="stat-figure text-[#529b03]">
+        <div className="stat-figure text-[#ffc107]">
           <BsPerson className="text-[40px]" />
         </div>
-        <div className="stat-title text-[#529b03] font-bold">Total Writers</div>
-        <div className="stat-value text-[#529b03]">{writers.length}</div>
+        <div className="stat-title text-black font-bold">Total Users</div>
+        <div className="stat-value text-[#ffc107]">{users.length}</div>
       </div>
 
       <div className="stat">

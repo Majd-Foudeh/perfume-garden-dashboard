@@ -8,7 +8,7 @@ import axios from "axios";
 import { SiCircle } from "react-icons/si";
 import { FiLogOut } from "react-icons/fi";
 import { FaHistory } from "react-icons/fa";
-import { ImBooks } from "react-icons/im";
+import { GiDelicatePerfume } from "react-icons/gi";
 import { BsPerson } from "react-icons/bs";
 import { TfiQuoteRight } from "react-icons/tfi";
 import { FcAbout } from "react-icons/fc";
@@ -56,8 +56,8 @@ export const Aside = (props) => {
               to="/books"
               className="flex  items-center gap-2 p-2  w-full text-base font-medium text-white rounded-lg transition duration-75 group hover:bg-[#fff] hover:text-black"
             >
-              <ImBooks />
-               Books
+              <GiDelicatePerfume />
+               Perfumes
             </Link>
           </li>
           <li>

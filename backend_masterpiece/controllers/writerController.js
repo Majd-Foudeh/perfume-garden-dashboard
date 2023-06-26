@@ -52,6 +52,8 @@ const showWriters = async(req , res)=>{
     }
 }
 
+
+
 module.exports = {
     addWriter,
   updateWriter,

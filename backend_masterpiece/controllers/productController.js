@@ -1,30 +1,29 @@
-const Product = require("../models/productModel");
+const perfume = require('../models/perfumeModel');
 
-const addProduct = async (req, res) => {
+const addPerfume = async (req, res) => {
   try {
-    const { name, description, price, category, ratings, quantity } = req.body;
+    const { perfume_name,perfume_category, price, description, perfume_picture } = req.body;
 
-    const newProduct = await Product({
-      name: name,
-      description: description,
+    const newPerfume = new perfume({
+      perfume_name: perfume_name,
+      perfume_category: perfume_category,
       price: price,
-      category: category,
-      ratings: ratings,
-      quantity: quantity,
+      description: description,
+      perfume_picture: perfume_picture,
     });
 
-    newProduct.save();
+    newPerfume.save();
 
-    res.status(200).json("product added successfully");
+    res.status(200).json('perfume added successfully');
   } catch (error) {
-    res.status(500).json({ error: "Failed to add product" });
+    res.status(500).json({ error: 'Failed to add perfume' });
   }
 };
 
 const updateProduct = async (req, res) => {
   try {
     const { name, description, price, category, ratings, quantity } = req.body;
-    const productID  = req.params.id;
+    const productID = req.params.id;
 
     const update = await Product.findOneAndUpdate(
       { _id: productID },
@@ -38,24 +37,23 @@ const updateProduct = async (req, res) => {
       }
     );
 
-    res.status(201).json('product updated successfully ')
+    res.status(201).json('product updated successfully ');
   } catch (error) {
-    res.status(500).json({ error: "Failed to update product" });
-}
+    res.status(500).json({ error: 'Failed to update product' });
+  }
 };
 
-const showProducts = async(req , res)=>{
-    try{
-       const products = await Product.find({});
-       res.json(products);
-    }catch(error){
-
-        res.status(500).json({ error: "cannot get products" });
-    }
-}
+const getPerfumes = async (req, res) => {
+  try {
+    const products = await perfume.find({});
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: 'cannot get products' });
+  }
+};
 
 module.exports = {
-  addProduct,
+  addPerfume,
   updateProduct,
-  showProducts,
+  getPerfumes,
 };

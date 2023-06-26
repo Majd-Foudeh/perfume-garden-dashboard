@@ -10,6 +10,7 @@ const perfumeSchema = new Schema({
   perfume_picture: {type:String}
 });
 
+
 module.exports=mongoose.model("perfume",perfumeSchema)
 
 

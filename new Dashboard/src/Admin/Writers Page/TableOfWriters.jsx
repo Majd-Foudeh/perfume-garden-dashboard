@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const TableOfWriters = ({ refresh, setRefresh }) => {
-  const [writers, setWriters] = useState([]);
+  const [users, setUsers] = useState([]);
   const [writerUpdate, setWriterUpdate] = useState({
     _id: "",
     name: "",
@@ -27,7 +27,7 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
     axios
       .get("http://localhost:4000/users")
       .then((response) => {
-        setWriters(response.data);
+        setUsers(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -35,28 +35,30 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
   }, [refresh]);
 
   const handleDelete = (id) => {
-    Swal.fire({
-      title: `Are yoy sure to delete this Writer ?`,
-      showConfirmButton: true,
-      showCancelButton: true,
-      confirmButtonText: "Yes",
-      cancelButtonText: "No",
-      icon: "warning",
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        Swal.fire(` Book was Deleted Successfully`, "", "success");
+    console.log(id);
+    // Swal.fire({
+    //   title: `Are you sure to delete this User ?`,
+    //   showConfirmButton: true,
+    //   showCancelButton: true,
+    //   confirmButtonText: "Yes",
+    //   cancelButtonText: "No",
+    //   icon: "warning",
+    // }).then((result) => {
+    //   /* Read more about isConfirmed, isDenied below */
+    //   if (result.isConfirmed) {
+    //     Swal.fire(` Book was Deleted Successfully`, "", "success");
 
         axios
-          .patch("http://localhost:8800/deleteWriters/" + id)
+          .put(`http://localhost:4000/deleteUser/${id}`)
           .then((response) => {
+            console.log("kooos");
             console.log(response.data);
             setRefresh(!refresh);
           })
 
-          .catch((error) => console.log(error.message));
-      } else Swal.fire("Cancel", "", "error");
-    });
+          .catch((error) => console.error(error.message));
+      // } else Swal.fire("Cancel", "", "error");
+    // });
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -82,19 +84,19 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
       notifyError(err.message);
     }
   };
-  const tableRows = writers.map((writer) => {
+  const tableRows = users.map((user) => {
     return (
-      <tr key={writer._id} className="border-b ">
+      <tr key={user._id} className="border-b ">
         <th
           scope="row"
           className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap "
         >
-          {writer.first_Name} {writer.last_Name}
+          {user.first_Name} {user.last_Name}
         </th>
-        <td className="px-4 py-3">{writer.user_email}</td>
-        <td className="px-4 py-3">{writer.user_phoneNumber}</td>
-        <td className="px-4 py-3">{writer.image}</td>
-        <td className="px-4 py-3">{writer.link}</td>
+        <td className="px-4 py-3">{user.user_email}</td>
+        <td className="px-4 py-3">{user.user_phoneNumber}</td>
+        <td className="px-4 py-3">{user.imageUrl}</td>
+        {/* <td className="px-4 py-3">{user.link}</td> */}
 
         <td className="px-4 py-3 flex items-center justify-start gap-2 flex-row-reverse">
           <div
@@ -109,12 +111,12 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
                   window.my_modal_2.showModal();
                   setWriterUpdate((prev) => ({
                     ...prev,
-                    _id: writer._id,
-                    name: writer.name,
-                    job: writer.job,
-                    image: writer.image,
-                    description: writer.description,
-                    link: writer.link,
+                    _id: user._id,
+                    name: user.name,
+                    job: user.job,
+                    image: user.image,
+                    description: user.description,
+                    link: user.link,
                   }));
                 }}
                 className="btn bg-white hover:bg-info shadow-lg hover:shadow-xl border-none "
@@ -129,7 +131,7 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
           >
             <div className="tooltip tooltip-error text-white" data-tip="Delete">
               <button
-                onClick={() => handleDelete(writer._id)}
+                onClick={() => handleDelete(user._id)}
                 className="btn bg-white hover:bg-red-200 shadow-lg hover:shadow-xl border-none "
               >
                 <AiOutlineDelete className="text-red-500 text-[18px]" />

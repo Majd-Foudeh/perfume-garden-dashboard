@@ -1,40 +1,39 @@
 /* eslint-disable react/prop-types */
-import Swal from "sweetalert2";
-import { useEffect, useState} from "react";
-import axios from "axios";
-import { AiOutlineDelete } from "react-icons/ai";
-import { BiSolidMessageSquareEdit } from "react-icons/bi";
+import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { BiSolidMessageSquareEdit } from 'react-icons/bi';
 
-import {  toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const TableOfBooks = ({ refresh, setRefresh }) => {
   const notifySuccess = (msg) => toast.success(msg);
   const notifyError = (msg) => toast.error(msg);
-  const [books, setBooks] = useState([]);
+  const [perfumes, setPerfumes] = useState([]);
   const [bookUpdate, setBookUpdate] = useState({
-    _id: "",
-    name: "",
-    description: "",
-    price: "",
-    category: "",
-    ratings: "",
-    quantity: "",
-    pages: "",
-    author: "",
-    img: "",
+    _id: '',
+    name: '',
+    description: '',
+    price: '',
+    category: '',
+    ratings: '',
+    quantity: '',
+    pages: '',
+    author: '',
+    img: '',
   });
-  
 
   // get all donors
   useEffect(() => {
     axios
-      .get("http://localhost:8800/allproducts")
+      .get('http://localhost:4000/allPerfumes')
       .then((response) => {
-        setBooks(response.data);
+        setPerfumes(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       });
   }, [refresh]);
 
@@ -51,23 +50,23 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
       title: `Are yoy sure to delete this book ?`,
       showConfirmButton: true,
       showCancelButton: true,
-      confirmButtonText: "Yes",
-      cancelButtonText: "No",
-      icon: "warning",
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      icon: 'warning',
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire(` Book was Deleted Successfully`, "", "success");
+        Swal.fire(` Book was Deleted Successfully`, '', 'success');
 
         axios
-          .patch("http://localhost:8800/deleteproduct/" + id)
+          .patch('http://localhost:8800/deleteproduct/' + id)
           .then((response) => {
             console.log(response.data);
             setRefresh(!refresh);
           })
 
           .catch((error) => console.log(error.message));
-      } else Swal.fire("Cancel", "", "error");
+      } else Swal.fire('Cancel', '', 'error');
     });
   };
   const handleSubmitUpdate = async (event) => {
@@ -78,32 +77,29 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
         `http://localhost:8800/updateproduct/${bookUpdate._id}`,
         bookUpdate
       );
-      notifySuccess("book updated success");
+      notifySuccess('book updated success');
       setRefresh(!refresh);
 
-      console.log("added success", data.data);
+      console.log('added success', data.data);
     } catch (err) {
       console.log(err);
       notifyError(err.message);
     }
   };
 
-  const tableRows = books.map((book) => {
+  const tableRows = perfumes.map((perfume) => {
     return (
-      <tr key={book._id} className="border-b ">
+      <tr key={perfume._id} className="border-b ">
         <th
           scope="row"
           className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap "
         >
-          {book.name}
+          {perfume.perfume_name}
         </th>
-        <td className="px-4 py-3">{book.category}</td>
-        <td className="px-4 py-3">{book.author}</td>
-        <td className="px-4 py-3">{book.pages}</td>
-        <td className="px-4 py-3">{book.ratings}</td>
-        <td className="px-4 py-3">{book.price}</td>
-        <td className="px-4 py-3">{book.description}</td>
-        <td className="px-4 py-3">{book.quantity}</td>
+        <td className="px-4 py-3">{perfume.perfume_category}</td>
+        <td className="px-4 py-3">{perfume.price}</td>
+        <td className="px-4 py-3">{perfume.description}</td>
+        <td className="px-4 py-3">{perfume.perfume_picture}</td>
 
         <td className="px-4 py-3 flex items-center justify-start gap-2 flex-row-reverse">
           <div
@@ -158,35 +154,26 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
     <section className="w-full  mt-5 ">
       <div className="">
         {/* Start coding here */}
-        <h1 className="text-[30px] font-bold py-3">Books</h1>
+        <h1 className="text-[30px] font-bold py-3">Perfumes</h1>
         <div className="bg-white  relative shadow-md sm:rounded-2xl overflow-scroll max-h-[300px]">
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-gray-500 table-zebra ">
               <thead className="text-xs text-white uppercase bg-[#529b03] ">
                 <tr>
                   <th scope="col" className="px-4 py-3">
-                    Book Tilte
+                    Perfume Name
                   </th>
                   <th scope="col" className="px-4 py-3">
                     Category
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Author
-                  </th>
-                  <th scope="col" className="px-4 py-3">
-                    Pages
-                  </th>
-                  <th scope="col" className="px-4 py-3">
-                    Rating
-                  </th>
-                  <th scope="col" className="px-4 py-3">
-                    price
+                    Price for ml
                   </th>
                   <th scope="col" className="px-4 py-3">
                     Description
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Quantity
+                    image
                   </th>
 
                   <th scope="col" className="px-4 py-3">
@@ -196,7 +183,7 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
               </thead>
               <tbody>
                 {tableRows.length === 0 ? (
-                  <div className="p-3 text-lg">There are no Books</div>
+                  <div className="p-3 text-lg">There are no Perfumes</div>
                 ) : (
                   tableRows
                 )}

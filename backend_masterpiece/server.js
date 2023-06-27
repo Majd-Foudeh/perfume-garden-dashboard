@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-// const PORT = process.env.PORT;
+const path = require('path');
 const mongoose = require("mongoose");
 const userRouts = require("./routes/userRouter");
 const notFoundHandler = require("./middleware/404");
@@ -24,6 +24,8 @@ app.use(quoteRouter);
 app.use(aboutRouter);
 app.use(writerRouter);
 app.use(userRouter);
+app.use("/public", express.static(path.join(__dirname, "public")));
+
 
 app.use("*", notFoundHandler);
 app.use(errorHandler);

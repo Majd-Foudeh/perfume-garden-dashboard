@@ -50,19 +50,16 @@ const signup = async (req, res) => {
   // res.status(401).send({ message: 'Invalid Email or Password.' });
 };
 
-const deleteUser =  (req, res) => {
+const deleteUser = async (req, res) => {
   try {
-    console.log('this is the koos id', req.params.id);
-    const User = user.findById(
-      req.params.id
-    );
-    if (!User) {
-      return res.status(404).json({ error: 'user not found' });
-    }
-
-    res.json(User);
+    const {id} = req.params
+    console.log(id);
+    const UserUpDate = await user.findByIdAndUpdate(id ,{isDeleted:true});
+   
+    res.json({success:`user ${UserUpDate.user_email} is deleted successfully`});
   } catch (error) {
     console.error('error in delete the user', error);
+    res.status(500).json({error:error.message})
   }
 };
 

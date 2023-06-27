@@ -1,45 +1,41 @@
 /* eslint-disable react/prop-types */
-import Swal from 'sweetalert2';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { BiSolidMessageSquareEdit } from 'react-icons/bi';
+import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { AiOutlineDelete } from "react-icons/ai";
+import { BiSolidMessageSquareEdit } from "react-icons/bi";
 
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const TableOfBooks = ({ refresh, setRefresh }) => {
   const notifySuccess = (msg) => toast.success(msg);
   const notifyError = (msg) => toast.error(msg);
   const [perfumes, setPerfumes] = useState([]);
-  const [bookUpdate, setBookUpdate] = useState({
-    _id: '',
-    name: '',
-    description: '',
-    price: '',
-    category: '',
-    ratings: '',
-    quantity: '',
-    pages: '',
-    author: '',
-    img: '',
+  const [PerfumesUpdate, setPerfumesUpdate] = useState({
+    _id: "",
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+    img: "",
   });
 
   // get all donors
   useEffect(() => {
     axios
-      .get('http://localhost:4000/allPerfumes')
+      .get("http://localhost:4000/allPerfumes")
       .then((response) => {
         setPerfumes(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       });
   }, [refresh]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setBookUpdate((prev) => ({
+    setPerfumesUpdate((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -50,23 +46,23 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
       title: `Are yoy sure to delete this book ?`,
       showConfirmButton: true,
       showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      icon: 'warning',
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      icon: "warning",
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire(` Book was Deleted Successfully`, '', 'success');
+        Swal.fire(` Book was Deleted Successfully`, "", "success");
 
         axios
-          .patch('http://localhost:8800/deleteproduct/' + id)
+          .patch("http://localhost:8800/deleteproduct/" + id)
           .then((response) => {
             console.log(response.data);
             setRefresh(!refresh);
           })
 
           .catch((error) => console.log(error.message));
-      } else Swal.fire('Cancel', '', 'error');
+      } else Swal.fire("Cancel", "", "error");
     });
   };
   const handleSubmitUpdate = async (event) => {
@@ -74,13 +70,14 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
       event.preventDefault();
 
       const data = await axios.patch(
-        `http://localhost:8800/updateproduct/${bookUpdate._id}`,
-        bookUpdate
+        `http://localhost:4000/updateproduct/${PerfumesUpdate._id}`,
+        PerfumesUpdate
       );
-      notifySuccess('book updated success');
+      notifySuccess("book updated success");
       setRefresh(!refresh);
 
-      console.log('added success', data.data);
+      console.log("added success", data.data);
+      console.log(data.data);
     } catch (err) {
       console.log(err);
       notifyError(err.message);
@@ -112,18 +109,14 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
                 // }
                 onClick={() => {
                   window.my_modal_1.showModal();
-                  setBookUpdate((prev) => ({
+                  setPerfumesUpdate((prev) => ({
                     ...prev,
-                    _id: book._id,
-                    name: book.name,
-                    description: book.description,
-                    price: book.price,
-                    category: book.category,
-                    ratings: book.ratings,
-                    quantity: book.quantity,
-                    pages: book.pages,
-                    author: book.author,
-                    img: book.img,
+                    _id: perfume._id,
+                    name: perfume.perfume_name,
+                    description: perfume.description,
+                    price: perfume.price,
+                    category: perfume.perfume_category,
+                    img: perfume.perfume_picture,
                   }));
                 }}
                 className="btn bg-white hover:bg-info shadow-lg hover:shadow-xl border-none "
@@ -199,6 +192,29 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
           method="dialog"
           className="modal-box"
         >
+          <div className="flex justify-end">
+            <button
+              dir="rtl"
+              type="button"
+              className="btn btn-sm "
+              onClick={() => window.my_modal_1.close()}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/*  */}
             <div className="form-control w-full max-w-xs">
@@ -210,7 +226,7 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
                 name="name"
                 placeholder="Type here"
                 className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookUpdate.name}
+                value={PerfumesUpdate.name}
                 onChange={handleChange}
               />
             </div>
@@ -224,25 +240,10 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
                 name="category"
                 placeholder="Type here"
                 className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookUpdate.category}
+                value={PerfumesUpdate.category}
                 onChange={handleChange}
               />
             </div>
-            {/*  */}
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">author</span>
-              </label>
-              <input
-                type="text"
-                name="author"
-                placeholder="Type here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookUpdate.author}
-                onChange={handleChange}
-              />
-            </div>
-            {/*  */}
             <div className="form-control w-full max-w-xs">
               <label className="label">
                 <span className="label-text">Description</span>
@@ -252,7 +253,7 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
                 name="description"
                 placeholder="Type here"
                 className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookUpdate.description}
+                value={PerfumesUpdate.description}
                 onChange={handleChange}
               />
             </div>
@@ -267,79 +268,35 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
                 name="price"
                 placeholder="0"
                 className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookUpdate.price}
+                value={PerfumesUpdate.price}
                 onChange={handleChange}
               />
             </div>
-            {/*  */}
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Quantity</span>
-              </label>
-              <input
-                type="number"
-                min="0"
-                name="quantity"
-                placeholder="0"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookUpdate.quantity}
-                onChange={handleChange}
-              />
-            </div>
-            {/*  */}
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Rating</span>
-              </label>
-              <input
-                type="number"
-                min="0"
-                max="5"
-                name="ratings"
-                placeholder="0"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookUpdate.ratings}
-                onChange={handleChange}
-              />
-            </div>
-            {/*  */}
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Pages</span>
-              </label>
-              <input
-                type="number"
-                min="0"
-                name="pages"
-                placeholder="0"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
-                value={bookUpdate.pages}
-                onChange={handleChange}
-              />
-            </div>
-            {/*  */}
 
             <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text">Book img</span>
+                <span className="label-text">Perfumes img</span>
               </label>
 
               <input
                 name="img"
                 onChange={handleChange}
-                value={bookUpdate.img}
+                value={PerfumesUpdate.img}
                 type="text"
                 className="input input-sm  border-[#529b03] w-full max-w-xs"
               />
             </div>
             {/*  */}
-
             {/*  */}
             <div className="form-control w-full max-w-xs col-start-3">
               <label className="label invisible">
                 <span className="label-text">button</span>
               </label>
-              <button type="submit" className="btn btn-sm btn-primary">
+              <button
+                type="submit"
+                className="btn btn-sm btn-primary"
+                onClick={() => window.my_modal_1.close()}
+              >
                 update
               </button>
             </div>

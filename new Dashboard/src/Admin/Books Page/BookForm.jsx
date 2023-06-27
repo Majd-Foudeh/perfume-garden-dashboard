@@ -1,26 +1,27 @@
 /* eslint-disable react/prop-types */
 
-import axios from 'axios';
-import { useState } from 'react';
+import axios from "axios";
+import { useState } from "react";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import { IoAddCircleOutline } from 'react-icons/io5';
-import { MdOutlineCancel } from 'react-icons/md';
+import { IoAddCircleOutline } from "react-icons/io5";
+import { MdOutlineCancel } from "react-icons/md";
 
 // import 'dotenv/config'
 export const BookForm = ({ setRefresh, refresh }) => {
   const notifySuccess = (msg) => toast.success(msg);
   const notifyError = (msg) => toast.error(msg);
 
+  const [file, setFile] = useState(null);
+
   const [show, setShow] = useState(false);
   const [perfumeInfo, setPerfumeInfo] = useState({
-    perfume_name: '',
-    category: '',
-    price: '',
-    description: '',
-    img: '',
+    perfume_name: "",
+    category: "",
+    price: "",
+    description: "",
   });
 
   const handleChange = (event) => {
@@ -31,27 +32,32 @@ export const BookForm = ({ setRefresh, refresh }) => {
     }));
   };
   const handleSubmit = async (event) => {
-    console.log('drobi');
+    console.log("drobi");
 
     try {
       event.preventDefault();
 
-      const newPerfume = {
-        perfume_name: perfumeInfo.perfume_name,
-        perfume_category: perfumeInfo.category,
-        price: perfumeInfo.price,
-        description: perfumeInfo.description,
-        perfume_picture: perfumeInfo.img,
-      };
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("perfume_name", perfumeInfo.perfume_name);
+      formData.append("category", perfumeInfo.category);
+      formData.append("price", perfumeInfo.price);
+      formData.append("description", perfumeInfo.description);
 
       const data = await axios.post(
-        'http://localhost:4000/addPerfume',
-        newPerfume
+        "http://localhost:4000/addPerfume",
+        formData
       );
-      notifySuccess('perfume added success');
+      notifySuccess("perfume added success");
       setRefresh(!refresh);
 
-      console.log('added success', data.data);
+      console.log("added success", data.data);
+      // setPerfumeInfo({
+      //   perfume_name: "",
+      //   category: "",
+      //   price: "",
+      //   description: "",
+      // });
     } catch (err) {
       console.log(err);
       notifyError(err.message);
@@ -108,7 +114,7 @@ export const BookForm = ({ setRefresh, refresh }) => {
               />
             </div>
             {/*  */}
-            <div className="form-control w-full max-w-xs">
+            {/* <div className="form-control w-full max-w-xs">
               <label className="label">
                 <span className="label-text">Category</span>
               </label>
@@ -124,6 +130,30 @@ export const BookForm = ({ setRefresh, refresh }) => {
                   });
                 }}
               />
+            </div> */}
+            <div>
+              <label
+                for="small"
+                class="block mb-2 text-sm text-gray-900 dark:text-white"
+              >
+                Category
+              </label>
+              <select
+                id="small"
+                class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                name="category"
+                onChange={(e) => {
+                  setPerfumeInfo({
+                    ...perfumeInfo,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
+              >
+                <option selected>Choose a category</option>
+                <option value="Light">Light</option>
+                <option value="Medium">Medium</option>
+                <option value="Strong">Strong</option>
+              </select>
             </div>
             {/*  */}
             <div className="form-control w-full max-w-xs">
@@ -158,38 +188,70 @@ export const BookForm = ({ setRefresh, refresh }) => {
                     ...perfumeInfo,
                     [e.target.name]: e.target.value,
                   });
-                }}              />
-            </div>
-           
-            
-            {/*  */}
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Book img</span>
-              </label>
-
-              <input
-                name="img"
-                onChange={(e) => {
-                  setPerfumeInfo({
-                    ...perfumeInfo,
-                    [e.target.name]: e.target.value,
-                  });
-                }}                type="text"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
+                }}
               />
             </div>
+
             {/*  */}
-            <div className="form-control w-full max-w-xs">
-              <label className="label invisible">
-                <span className="label-text">button</span>
+
+            <div class="flex items-center justify-center w-full">
+              <label
+                for="dropzone-file"
+                class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+              >
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                  <svg
+                    aria-hidden="true"
+                    class="w-10 h-10 mb-3 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    ></path>
+                  </svg>
+                  <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span class="font-semibold">Click to upload</span> or drag
+                    and drop
+                  </p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">
+                    SVG, PNG, JPG or GIF (MAX. 800x400px)
+                  </p>
+                </div>
+                <input
+                  id="dropzone-file"
+                  type="file"
+                  name="img"
+                  class="hidden"
+                  // onChange={(e) => {
+                  //   setPerfumeInfo({
+                  //     ...perfumeInfo,
+                  //     [e.target.name]: e.target.value,
+                  //   });
+                  // }}
+                  onChange={(e) => {
+                    setFile(e.target.files[0]);
+                    console.log(e.target.files[0]);
+                  }}
+                />
               </label>
-              <button type="submit" className="btn btn-sm btn-primary">
-                Add
-              </button>
             </div>
-            {/*  */}
           </div>
+
+          <div className="form-control w-full max-w-xs">
+            <label className="label invisible">
+              <span className="label-text">button</span>
+            </label>
+            <button type="submit" className="btn btn-sm btn-primary">
+              Add
+            </button>
+          </div>
+          {/*  */}
         </form>
       )}
     </>

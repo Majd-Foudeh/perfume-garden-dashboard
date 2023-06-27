@@ -36,29 +36,26 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
 
   const handleDelete = (id) => {
     console.log(id);
-    // Swal.fire({
-    //   title: `Are you sure to delete this User ?`,
-    //   showConfirmButton: true,
-    //   showCancelButton: true,
-    //   confirmButtonText: "Yes",
-    //   cancelButtonText: "No",
-    //   icon: "warning",
-    // }).then((result) => {
-    //   /* Read more about isConfirmed, isDenied below */
-    //   if (result.isConfirmed) {
-    //     Swal.fire(` Book was Deleted Successfully`, "", "success");
-
+    Swal.fire({
+      title: `Are you sure to delete this User ?`,
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      icon: "warning",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
         axios
           .put(`http://localhost:4000/deleteUser/${id}`)
           .then((response) => {
-            console.log("kooos");
             console.log(response.data);
             setRefresh(!refresh);
+            Swal.fire(` ${response.data.success}`, "", "success");
           })
-
           .catch((error) => console.error(error.message));
-      // } else Swal.fire("Cancel", "", "error");
-    // });
+      } else Swal.fire("Cancel", "", "error");
+    });
   };
   const handleChange = (event) => {
     const { name, value } = event.target;

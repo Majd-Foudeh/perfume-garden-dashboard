@@ -4,7 +4,12 @@ const Schema = mongoose.Schema;
 
 const perfumeSchema = new Schema({
   perfume_name: { type: String, required: true },
-  perfume_category: { type: String, required: true },
+  perfume_category: {
+    type: String,
+    enum: ["Light", "Medium", "Strong"],
+    required: true,
+  },
+  gender: { type: String, enum: ["Men", "Women"], required: true },
   price: { type: Number, required: true },
   description: { type: String },
   perfume_picture: { type: String },

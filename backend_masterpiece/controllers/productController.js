@@ -2,13 +2,14 @@ const perfume = require("../models/perfumeModel");
 
 const addPerfume = async (req, res) => {
   try {
-    const { perfume_name, category, price, description } = req.body;
+    const { perfume_name, gender, category, price, description } = req.body;
 
     const imagePath = req.file.path;
 
     const newPerfume = new perfume({
       perfume_name: perfume_name,
       perfume_category: category,
+      gender: gender,
       price: price,
       description: description,
       perfume_picture: imagePath,

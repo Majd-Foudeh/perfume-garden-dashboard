@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
-
+import empty from "../../../public/empty.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const TableOfBooks = ({ refresh, setRefresh }) => {
+export const TableOfOrdersHistory = ({ refresh, setRefresh }) => {
   const notifySuccess = (msg) => toast.success(msg);
   const notifyError = (msg) => toast.error(msg);
-  const [perfumes, setPerfumes] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [PerfumesUpdate, setPerfumesUpdate] = useState({
     _id: "",
     name: "",
@@ -24,9 +24,9 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
   // get all donors
   useEffect(() => {
     axios
-      .get("http://localhost:4000/allPerfumes")
+      .get("http://localhost:4000/completedOrders")
       .then((response) => {
-        setPerfumes(response.data);
+        setOrders(response.data);
         // console.log(response.data);
       })
       .catch((error) => {
@@ -85,23 +85,23 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
     }
   };
 
-  const tableRows = perfumes.map((perfume) => {
+  const tableRows = orders.map((order) => {
     return (
-      <tr key={perfume._id} className="border-b ">
+      <tr key={order._id} className="border-b ">
         <th
           scope="row"
           className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap "
         >
-          {perfume.perfume_name}
+           {order.userId.first_Name} {order.userId.last_Name}
         </th>
-        <td className="px-4 py-3">{perfume.perfume_category}</td>
-        <td className="px-4 py-3">{perfume.gender}</td>
+        <td className="px-4 py-3">{order.userId.user_phoneNumber}</td>
+        <td className="px-4 py-3">{order.userId.user_email}</td>
+        <td className="px-4 py-3">{order.shippingAddress}</td>
 
-        <td className="px-4 py-3">{perfume.price} JD</td>
-        <td className="px-4 py-3">{perfume.description}</td>
-        <td className="px-4 py-3">{perfume.perfume_picture}</td>
+        <td className="px-4 py-3">{order.total} JD</td>
+        <td className="px-4 py-3">{new Date(order.date).toLocaleString()}</td>
 
-        <td className="px-4 py-3 flex items-center justify-start gap-2 flex-row-reverse">
+        {/* <td className="px-4 py-3 flex items-center justify-start gap-2 flex-row-reverse">
           <div
             id=""
             className="bg-white  rounded divide-y divide-gray-100 shadow "
@@ -141,7 +141,7 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
               </button>
             </div>
           </div>
-        </td>
+        </td> */}
       </tr>
     );
   });
@@ -150,34 +150,34 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
     <section className="w-full  mt-5 ">
       <div className="">
         {/* Start coding here */}
-        <h1 className="text-[30px] font-bold py-3">Perfumes</h1>
+        <h1 className="text-[30px] font-bold py-3">Orders History</h1>
         <div className="bg-white  relative shadow-md sm:rounded-2xl overflow-scroll max-h-[300px]">
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-gray-500 table-zebra ">
               <thead className="text-xs text-black uppercase bg-[#ffc107] ">
                 <tr>
                   <th scope="col" className="px-4 py-3">
-                    Perfume Name
+                    Customer Name 
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Category
+                    Customer Phone Number
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    targeted audience
+                    Customer email
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Price for ml
+                  shipping address
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Description
+                   Total paid
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    image
+                  date of order
                   </th>
 
-                  <th scope="col" className="px-4 py-3">
+                  {/* <th scope="col" className="px-4 py-3">
                     <span className="sr-only">Actions</span>
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody>

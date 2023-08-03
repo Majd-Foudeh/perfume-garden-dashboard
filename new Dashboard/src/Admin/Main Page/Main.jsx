@@ -2,11 +2,12 @@ import { useContext } from "react";
 import { Stats } from "./Stats";
 import { TableOfBooks } from "../Books Page/TableOfBooks";
 import { TableOfWriters } from "../Writers Page/TableOfWriters";
-import { TableOfQuotes } from "../Quotes Page/TableOfQuotes";
 
 import { TableOfHistory } from "../History Page/TableOfHistory";
 
 import { RefreshContext } from "../../App";
+import { TableOfOrders } from "../Orders page/TableOfOrders";
+import { TableOfOrdersHistory } from "../orders History/TableOfOrdersHistory";
 
 export const Main = () => {
   const { refresh, setRefresh } = useContext(RefreshContext);
@@ -23,8 +24,9 @@ export const Main = () => {
       <div className="grid grid-cols-1 gap-4">
         <TableOfWriters setRefresh={setRefresh} refresh={refresh} />
       </div>
+    
       <div className="grid grid-cols-1 gap-4">
-        <TableOfQuotes setRefresh={setRefresh} refresh={refresh} />
+        <TableOfOrdersHistory setRefresh={setRefresh} refresh={refresh} />
       </div>
     </main>
   );

@@ -7,7 +7,7 @@ import axios from 'axios';
 
 // icons
 
-import {FaDonate } from 'react-icons/fa';
+import {FaDonate, FaHistory } from 'react-icons/fa';
 import { ImBooks } from "react-icons/im";
 import { BsPerson } from "react-icons/bs";
 import { RiChatQuoteLine } from "react-icons/ri";
@@ -44,12 +44,12 @@ export const Stats = (props) => {
   }, [props.refresh]);
 
   // total donation
-  const [quotes, setQuotes] = useState([]);
+  const [pendingOrders, setPendingOrders] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:8800/allquotes")
+      .get("http://localhost:4000/allOrders")
       .then((response) => {
-        setQuotes(response.data);
+        setPendingOrders(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -57,7 +57,17 @@ export const Stats = (props) => {
   }, [props.refresh]);
 
 // total of request
-const [orders, setOrders] = useState([]);
+const [CompletedOrders, setCompletedOrders] = useState([]);
+useEffect(() => {
+  axios
+    .get("http://localhost:4000/completedOrders")
+    .then((response) => {
+      setCompletedOrders(response.data);
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+}, [props.refresh]);
 
 // useEffect(() => {
 //   axios
@@ -99,15 +109,15 @@ const [orders, setOrders] = useState([]);
         <div className="stat-figure text-[#ffc107] ">
           <FaDonate className="text-[40px] " />
         </div>
-        <div className="stat-title text-black font-bold"> Total Orders </div>
-        <div className="stat-value text-[#ffc107]">{orders.length}</div>
+        <div className="stat-title text-black font-bold"> Pending Orders </div>
+        <div className="stat-value text-[#ffc107]">{pendingOrders.length}</div>
       </div>
       <div className="stat">
-        <div className="stat-figure text-[#529b03]">
-          <RiChatQuoteLine className="text-[40px] text-[#529b03]" />
+        <div className="stat-figure text-[#ffc107]">
+          <FaHistory className="text-[40px] text-[#ffc107]" />
         </div>
-        <div className="stat-title  text-black font-bold">Total Quotes </div>
-        <div className="stat-value text-[#ffc107]">{quotes.length}</div>
+        <div className="stat-title  text-black font-bold">Completed Orders </div>
+        <div className="stat-value text-[#ffc107]">{CompletedOrders.length}</div>
       </div>
     </div>
   );

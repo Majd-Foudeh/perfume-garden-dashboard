@@ -59,7 +59,7 @@ const handleChange = (e) => {
                 <textarea
                   onChange={handleChange}
                   value={about.text}
-                  placeholder="Type Your New About Her"
+                  placeholder="Type Your New About Here"
                   className="textarea textarea-bordered  w-full h-[230px]"
                 ></textarea>
                 <button className="btn btn-sm w-full btn-primary">

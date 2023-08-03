@@ -30,7 +30,7 @@ export const Aside = (props) => {
 
   return (
 
-    <aside className="fixed top-0 z-50 w-60  h-screen pt-[62px] pb-1 transition-transform -translate-x-full  md:translate-x-0"
+    <aside className="fixed top-0 z-50 w-60  h-screen pt-[62px]  transition-transform -translate-x-full  md:translate-x-0"
     >
       <div className="overflow-y-auto py-5 px-3 h-full bg-[#0e0e07] ">
         <ul className="space-y-2">
@@ -55,15 +55,6 @@ export const Aside = (props) => {
 
           <li>
             <Link
-              to="/orders"
-              className="flex  items-center gap-2 p-2  w-full text-base font-medium text-white rounded-lg transition duration-75 group hover:bg-[#fff] hover:text-black"
-            >
-              <FaHistory />
-              Orders
-            </Link>
-          </li>
-          <li>
-            <Link
               to="/writers"
               className="flex  items-center gap-2 p-2  w-full text-base font-medium text-white rounded-lg transition duration-75 group hover:bg-[#fff] hover:text-black"
             >
@@ -71,16 +62,26 @@ export const Aside = (props) => {
               Users
             </Link>
           </li>
-
           <li>
             <Link
-              to="/quotes"
+              to="/orders"
               className="flex  items-center gap-2 p-2  w-full text-base font-medium text-white rounded-lg transition duration-75 group hover:bg-[#fff] hover:text-black"
             >
-              <TfiQuoteRight />
-              Quotes
+              <FaHistory />
+              Pending Orders
             </Link>
           </li>
+          <li>
+            <Link
+              to="/ordersHistory"
+              className="flex  items-center gap-2 p-2  w-full text-base font-medium text-white rounded-lg transition duration-75 group hover:bg-[#fff] hover:text-black"
+            >
+              <FaHistory />
+               Orders History
+            </Link>
+          </li>
+
+          
           <li>
             <Link
               to="/about"

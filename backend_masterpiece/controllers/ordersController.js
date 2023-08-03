@@ -10,6 +10,16 @@ const pendingOrders = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const completedOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({ status: "completed" })
+      .populate("userId")
+      .lean();
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 const confirmOrder = async (req, res) => {
   try {
@@ -30,4 +40,14 @@ const confirmOrder = async (req, res) => {
   }
 };
 
-module.exports = { pendingOrders, confirmOrder };
+const ordersNumber = async (req, res) => {
+  try {
+    const num = await Order.estimatedDocumentCount();
+    res.status(200).json(num);
+  } catch (error) {
+    res.status(500).json({ error: "error in get user number " });
+    console.error(error);
+  }
+};
+
+module.exports = { pendingOrders, confirmOrder,ordersNumber,completedOrders };

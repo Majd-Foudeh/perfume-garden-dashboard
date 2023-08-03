@@ -92,7 +92,7 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
         </th>
         <td className="px-4 py-3">{user.user_email}</td>
         <td className="px-4 py-3">{user.user_phoneNumber}</td>
-        <td className="px-4 py-3">{user.imageUrl}</td>
+        <td className="px-4 py-3">{user.imageUrl?user.imageUrl:"--user has no profile picture--"}</td>
         {/* <td className="px-4 py-3">{user.link}</td> */}
 
         <td className="px-4 py-3 flex items-center justify-start gap-2 flex-row-reverse">

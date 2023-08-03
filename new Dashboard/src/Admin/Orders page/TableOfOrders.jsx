@@ -152,9 +152,9 @@ export const TableOfOrders = ({ refresh, setRefresh }) => {
           >
             completed
           </button>
-          <button class="bg-red-100 hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+          {/* <button class="bg-red-100 hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
             Button
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -217,7 +217,7 @@ export const TableOfOrders = ({ refresh, setRefresh }) => {
 
   return (
     <section className="w-full  mt-5 ">
-      <h1 className="text-[30px] font-bold py-3">Pending Orders</h1>
+      <h1 className="text-[30px] font-bold py-3 mb-10">Pending Orders</h1>
 
       <div className="flex flex-wrap gap-y-3 gap-x-2 justify-evenly">
         {tableRows ? (

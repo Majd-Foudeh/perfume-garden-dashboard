@@ -61,8 +61,8 @@ export const Nav = () => {
             className="flex items-center justify-between mr-4"
           >
            
-            <span className="flex items-center  justify-center  w-24 h-10  text-2xl font-semibold whitespace-nowrap text-white">
-              Kitabk
+            <span className="flex items-center  justify-center   h-10  text-2xl font-semibold whitespace-nowrap text-white">
+              Perfume Garden
             </span>
           </a>
         </div>

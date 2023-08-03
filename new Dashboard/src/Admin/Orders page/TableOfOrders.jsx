@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
-
+import empty from "../../../public/empty.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const TableOfBooks = ({ refresh, setRefresh }) => {
+export const TableOfOrders = ({ refresh, setRefresh }) => {
   const notifySuccess = (msg) => toast.success(msg);
   const notifyError = (msg) => toast.error(msg);
-  const [perfumes, setPerfumes] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [PerfumesUpdate, setPerfumesUpdate] = useState({
     _id: "",
     name: "",
@@ -24,10 +24,11 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
   // get all donors
   useEffect(() => {
     axios
-      .get("http://localhost:4000/allPerfumes")
+      .get("http://localhost:4000/allOrders")
       .then((response) => {
-        setPerfumes(response.data);
+        setOrders(response.data);
         // console.log(response.data);
+        console.log(orders);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -56,7 +57,7 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
         Swal.fire(` Book was Deleted Successfully`, "", "success");
 
         axios
-          .patch("http://localhost:8800/deleteproduct/" + id)
+          .patch("http://localhost:4000/confirmOrder/" + id)
           .then((response) => {
             console.log(response.data);
             setRefresh(!refresh);
@@ -66,6 +67,31 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
       } else Swal.fire("Cancel", "", "error");
     });
   };
+
+  const handleCompleted = (id) => {
+    console.log(id);
+    Swal.fire({
+      title: `Are you sure this order is completed ?`,
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      icon: "warning",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        axios
+          .put(`http://localhost:4000/confirmOrder/${id}`)
+          .then((response) => {
+            console.log(response.data);
+            setRefresh(!refresh);
+            Swal.fire(` ${response.data.success}`, "", "success");
+          })
+          .catch((error) => console.error(error.message));
+      } else Swal.fire("Cancel", "", "error");
+    });
+  };
+
   const handleSubmitUpdate = async (event) => {
     try {
       event.preventDefault();
@@ -85,113 +111,126 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
     }
   };
 
-  const tableRows = perfumes.map((perfume) => {
+  const tableRows = orders.map((order) => {
     return (
-      <tr key={perfume._id} className="border-b ">
-        <th
-          scope="row"
-          className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap "
-        >
-          {perfume.perfume_name}
-        </th>
-        <td className="px-4 py-3">{perfume.perfume_category}</td>
-        <td className="px-4 py-3">{perfume.gender}</td>
+      <div className="w-80 border rounded bg-gray-100">
+        <div className="p-4">
+          <h5 className="text-xl font-bold mb-2">
+            {order.userId.first_Name} {order.userId.last_Name} order{" "}
+          </h5>
+          <p className="text-lg font-semibold">Customer Info:</p>
+          <p className="text-gray-800 ">
+            <span className="font-semibold">Phone number: </span>{" "}
+            {order.userId.user_phoneNumber}
+          </p>
+          <p className="text-gray-800 ">
+            <span className="font-semibold">Email: </span>{" "}
+            {order.userId.user_email}
+          </p>
+          <p className="text-gray-800 ">
+            <span className="font-semibold">ShippingAddress: </span>{" "}
+            {order.shippingAddress}
+          </p>
 
-        <td className="px-4 py-3">{perfume.price}</td>
-        <td className="px-4 py-3">{perfume.description}</td>
-        <td className="px-4 py-3">{perfume.perfume_picture}</td>
+          <p className="text-gray-600"></p>
+        </div>
+        <ul className="list-none p-4">
+          {order.products.map((perfume) => (
+            <li className="py-2 border-t">
+              {perfume.perfumeName} x {perfume.quantity}
+            </li>
+          ))}
+        </ul>
+        <hr className="mx-4 " />
+        <p className="text-gray-800 ms-4">
+          <span className="font-semibold">Total paid: </span> {order.total} JD
+        </p>
+        <div className="p-4 flex justify-evenly self-end">
+          <button
+            onClick={() => handleCompleted(order._id)}
+            class="bg-green-100 hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
+          >
+            completed
+          </button>
+          <button class="bg-red-100 hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+            Button
+          </button>
+        </div>
+      </div>
 
-        <td className="px-4 py-3 flex items-center justify-start gap-2 flex-row-reverse">
-          <div
-            id=""
-            className="bg-white  rounded divide-y divide-gray-100 shadow "
-          >
-            <div className="tooltip tooltip-info text-white" data-tip="Edit">
-              <button
-                // onClick={() => handleUpdate(book._id)
-                // }
-                onClick={() => {
-                  window.my_modal_1.showModal();
-                  setPerfumesUpdate((prev) => ({
-                    ...prev,
-                    _id: perfume._id,
-                    name: perfume.perfume_name,
-                    description: perfume.description,
-                    price: perfume.price,
-                    category: perfume.perfume_category,
-                    img: perfume.perfume_picture,
-                  }));
-                }}
-                className="btn bg-white hover:bg-info shadow-lg hover:shadow-xl border-none "
-              >
-                <BiSolidMessageSquareEdit className="text-neutral text-[18px]" />
-              </button>
-            </div>
-          </div>
-          <div
-            id=""
-            className="bg-white  rounded divide-y divide-gray-100 shadow "
-          >
-            <div className="tooltip tooltip-error text-white" data-tip="Delete">
-              <button
-                onClick={() => handleDelete(book._id)}
-                className="btn bg-white hover:bg-red-200 shadow-lg hover:shadow-xl border-none "
-              >
-                <AiOutlineDelete className="text-red-500 text-[18px]" />
-              </button>
-            </div>
-          </div>
-        </td>
-      </tr>
+      // <tr key={order._id} className="border-b ">
+      //   <th
+      //     scope="row"
+      //     className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap "
+      //   >
+      //     {order.perfume_name}
+      //   </th>
+      //   <td className="px-4 py-3">{order.perfume_category}</td>
+      //   <td className="px-4 py-3">{order.price}</td>
+      //   <td className="px-4 py-3">{order.description}</td>
+      //   <td className="px-4 py-3">{order.perfume_picture}</td>
+
+      //   <td className="px-4 py-3 flex items-center justify-start gap-2 flex-row-reverse">
+      //     <div
+      //       id=""
+      //       className="bg-white  rounded divide-y divide-gray-100 shadow "
+      //     >
+      //       <div className="tooltip tooltip-info text-white" data-tip="Edit">
+      //         <button
+      //           // onClick={() => handleUpdate(book._id)
+      //           // }
+      //           onClick={() => {
+      //             window.my_modal_1.showModal();
+      //             setPerfumesUpdate((prev) => ({
+      //               ...prev,
+      //               _id: perfume._id,
+      //               name: perfume.perfume_name,
+      //               description: perfume.description,
+      //               price: perfume.price,
+      //               category: perfume.perfume_category,
+      //               img: perfume.perfume_picture,
+      //             }));
+      //           }}
+      //           className="btn bg-white hover:bg-info shadow-lg hover:shadow-xl border-none "
+      //         >
+      //           <BiSolidMessageSquareEdit className="text-neutral text-[18px]" />
+      //         </button>
+      //       </div>
+      //     </div>
+      //     <div
+      //       id=""
+      //       className="bg-white  rounded divide-y divide-gray-100 shadow "
+      //     >
+      //       <div className="tooltip tooltip-error text-white" data-tip="Delete">
+      //         <button
+      //           onClick={() => handleDelete(book._id)}
+      //           className="btn bg-white hover:bg-red-200 shadow-lg hover:shadow-xl border-none "
+      //         >
+      //           <AiOutlineDelete className="text-red-500 text-[18px]" />
+      //         </button>
+      //       </div>
+      //     </div>
+      //   </td>
+      // </tr>
     );
   });
 
   return (
     <section className="w-full  mt-5 ">
-      <div className="">
-        {/* Start coding here */}
-        <h1 className="text-[30px] font-bold py-3">Perfumes</h1>
-        <div className="bg-white  relative shadow-md sm:rounded-2xl overflow-scroll max-h-[300px]">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left text-gray-500 table-zebra ">
-              <thead className="text-xs text-black uppercase bg-[#ffc107] ">
-                <tr>
-                  <th scope="col" className="px-4 py-3">
-                    Perfume Name
-                  </th>
-                  <th scope="col" className="px-4 py-3">
-                    Category
-                  </th>
-                  <th scope="col" className="px-4 py-3">
-                    targeted audience
-                  </th>
-                  <th scope="col" className="px-4 py-3">
-                    Price for ml
-                  </th>
-                  <th scope="col" className="px-4 py-3">
-                    Description
-                  </th>
-                  <th scope="col" className="px-4 py-3">
-                    image
-                  </th>
+      <h1 className="text-[30px] font-bold py-3">Pending Orders</h1>
 
-                  <th scope="col" className="px-4 py-3">
-                    <span className="sr-only">Actions</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {tableRows.length === 0 ? (
-                  <div className="p-3 text-lg">There are no Perfumes</div>
-                ) : (
-                  tableRows
-                )}
-              </tbody>
-            </table>
+      <div className="flex flex-wrap gap-y-3 gap-x-2 justify-evenly">
+        {tableRows ? (
+          tableRows
+        ) : (
+          <div>
+            <img src={empty} width={500} />
+            <div className="font-bold text-yellow-300 text-center text-2xl">
+              There are no pending orders now
+            </div>
           </div>
-        </div>
+        )}
       </div>
-
       <dialog id="my_modal_1" className="modal">
         <form
           onSubmit={handleSubmitUpdate}

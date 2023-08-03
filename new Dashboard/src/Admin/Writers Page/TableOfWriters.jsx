@@ -143,7 +143,7 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
   return (
     <section className="w-full  mt-5 ">
       <div className="">
-        <h1 className="text-[30px] font-bold py-3">Authors</h1>
+        <h1 className="text-[30px] font-bold py-3">Users</h1>
         {/* Start coding here */}
         <div className="bg-white  relative shadow-md sm:rounded-2xl overflow-scroll max-h-[300px]">
           <div className="overflow-x-auto">
@@ -151,18 +151,19 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
               <thead className="text-xs text-black uppercase bg-[#ffc107] ">
                 <tr>
                   <th scope="col" className="px-4 py-3">
-                    Author Name
+                    User Name
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Occupations
+                    Email
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Description
+                    Phone Number
                   </th>
 
                   <th scope="col" className="px-4 py-3">
                     Image
                   </th>
+                  {/* <th scope="col" className="px-4 py-3">
                   {/* <th scope="col" className="px-4 py-3">
                     Link
                   </th> */}

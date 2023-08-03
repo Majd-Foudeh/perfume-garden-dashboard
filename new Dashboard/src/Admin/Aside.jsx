@@ -3,7 +3,6 @@ import { useEffect, useState, useReducer } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-
 // icons
 import { SiCircle } from "react-icons/si";
 import { FiLogOut } from "react-icons/fi";
@@ -13,28 +12,21 @@ import { BsPerson } from "react-icons/bs";
 import { TfiQuoteRight } from "react-icons/tfi";
 import { FcAbout } from "react-icons/fc";
 
-
-
-
 export const Aside = (props) => {
   const [hotels, setHotels] = useState([]);
   const [reducer, forceUpdate] = useReducer((x) => x + 1, 0);
 
-  function handleLogOut() {      
+  function handleLogOut() {
     window.scrollTo(0, 0);
-    
+
     var Nav = document.getElementById("Nav");
     Nav.style.display = "block";
     var Footer = document.getElementById("Footer");
     Footer.style.display = "block";
 
     localStorage.removeItem("token");
-    props.forceUpdate()
+    props.forceUpdate();
   }
-
-  
-
-  
 
   return (
 
@@ -57,16 +49,17 @@ export const Aside = (props) => {
               className="flex  items-center gap-2 p-2  w-full text-base font-medium text-white rounded-lg transition duration-75 group hover:bg-[#fff] hover:text-black"
             >
               <GiDelicatePerfume />
-               Perfumes
+              Perfumes
             </Link>
           </li>
+
           <li>
             <Link
               to="/orders"
               className="flex  items-center gap-2 p-2  w-full text-base font-medium text-white rounded-lg transition duration-75 group hover:bg-[#fff] hover:text-black"
             >
               <FaHistory />
-              History
+              Orders
             </Link>
           </li>
           <li>
@@ -75,10 +68,10 @@ export const Aside = (props) => {
               className="flex  items-center gap-2 p-2  w-full text-base font-medium text-white rounded-lg transition duration-75 group hover:bg-[#fff] hover:text-black"
             >
               <BsPerson />
-              Writers
+              Users
             </Link>
           </li>
-          
+
           <li>
             <Link
               to="/quotes"
@@ -93,14 +86,12 @@ export const Aside = (props) => {
               to="/about"
               className="flex  items-center gap-2 p-2  w-full text-base font-medium text-white rounded-lg transition duration-75 group hover:bg-[#fff] hover:text-black"
             >
-              <FcAbout  />
+              <FcAbout />
               About Us
             </Link>
           </li>
           <a href="/###" onClick={handleLogOut}>
-            <span 
-              className="flex  items-center gap-2 p-2  w-full text-base font-medium text-white rounded-lg transition duration-75 group hover:bg-[#fff] hover:text-black"
-              >
+            <span className="flex  items-center gap-2 p-2  w-full text-base font-medium text-white rounded-lg transition duration-75 group hover:bg-[#fff] hover:text-black">
               <FiLogOut />
               Logout
             </span>

@@ -20,6 +20,7 @@ export const BookForm = ({ setRefresh, refresh }) => {
   const [perfumeInfo, setPerfumeInfo] = useState({
     perfume_name: "",
     category: "",
+    gender: "",
     price: "",
     description: "",
   });
@@ -43,6 +44,7 @@ export const BookForm = ({ setRefresh, refresh }) => {
       formData.append("category", perfumeInfo.category);
       formData.append("price", perfumeInfo.price);
       formData.append("description", perfumeInfo.description);
+      formData.append("gender", perfumeInfo.gender);
 
       const data = await axios.post(
         "http://localhost:4000/addPerfume",
@@ -153,6 +155,29 @@ export const BookForm = ({ setRefresh, refresh }) => {
                 <option value="Light">Light</option>
                 <option value="Medium">Medium</option>
                 <option value="Strong">Strong</option>
+              </select>
+            </div>
+            <div>
+              <label
+                for="small"
+                class="block mb-2 text-sm text-gray-900 dark:text-white"
+              >
+                Audience category
+              </label>
+              <select
+                id="small"
+                class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                name="gender"
+                onChange={(e) => {
+                  setPerfumeInfo({
+                    ...perfumeInfo,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
+              >
+                <option selected>Choose the audience category</option>
+                <option value="Men">For Men</option>
+                <option value="Women">For Women</option>
               </select>
             </div>
             {/*  */}

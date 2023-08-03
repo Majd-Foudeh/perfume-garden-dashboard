@@ -148,7 +148,7 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
         <div className="bg-white  relative shadow-md sm:rounded-2xl overflow-scroll max-h-[300px]">
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-gray-500  table-zebra">
-              <thead className="text-xs text-white uppercase bg-[#529b03] ">
+              <thead className="text-xs text-black uppercase bg-[#ffc107] ">
                 <tr>
                   <th scope="col" className="px-4 py-3">
                     Author Name
@@ -163,9 +163,9 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
                   <th scope="col" className="px-4 py-3">
                     Image
                   </th>
-                  <th scope="col" className="px-4 py-3">
+                  {/* <th scope="col" className="px-4 py-3">
                     Link
-                  </th>
+                  </th> */}
                   <th scope="col" className="px-4 py-3">
                     <span className="sr-only">Actions</span>
                   </th>
@@ -198,7 +198,7 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
                 type="text"
                 name="name"
                 placeholder="Type here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 value={writerUpdate.name}
                 onChange={handleChange}
               />
@@ -212,7 +212,7 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
                 type="text"
                 name="job"
                 placeholder="Type here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 value={writerUpdate.job}
                 onChange={handleChange}
               />
@@ -226,7 +226,7 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
                 type="text"
                 name="description"
                 placeholder="Type here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 value={writerUpdate.description}
                 onChange={handleChange}
               />
@@ -240,7 +240,7 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
                 type="text"
                 name="image"
                 placeholder="Type here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 value={writerUpdate.image}
                 onChange={handleChange}
               />
@@ -254,7 +254,7 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
                 type="text"
                 name="link"
                 placeholder="Type Here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 value={writerUpdate.link}
                 onChange={handleChange}
               />
@@ -263,7 +263,7 @@ export const TableOfWriters = ({ refresh, setRefresh }) => {
               <label className="label invisible">
                 <span className="label-text">button</span>
               </label>
-              <button type="submit" className="btn btn-sm btn-primary">
+              <button type="submit" className="btn btn-sm bg-[#ffc107]">
                 update
               </button>
             </div>

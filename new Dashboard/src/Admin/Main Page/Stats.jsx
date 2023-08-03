@@ -96,18 +96,18 @@ const [orders, setOrders] = useState([]);
       </div>
 
       <div className="stat">
-        <div className="stat-figure text-[#529b03] ">
+        <div className="stat-figure text-[#ffc107] ">
           <FaDonate className="text-[40px] " />
         </div>
-        <div className="stat-title text-[#529b03] font-bold"> Total Orders </div>
-        <div className="stat-value text-[#529b03]">{orders.length}</div>
+        <div className="stat-title text-black font-bold"> Total Orders </div>
+        <div className="stat-value text-[#ffc107]">{orders.length}</div>
       </div>
       <div className="stat">
         <div className="stat-figure text-[#529b03]">
           <RiChatQuoteLine className="text-[40px] text-[#529b03]" />
         </div>
-        <div className="stat-title  text-[#529b03] font-bold">Total Quotes </div>
-        <div className="stat-value text-[#529b03]">{quotes.length}</div>
+        <div className="stat-title  text-black font-bold">Total Quotes </div>
+        <div className="stat-value text-[#ffc107]">{quotes.length}</div>
       </div>
     </div>
   );

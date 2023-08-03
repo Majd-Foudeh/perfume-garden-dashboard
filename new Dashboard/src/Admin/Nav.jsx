@@ -5,7 +5,7 @@
 export const Nav = () => {
  
   return (
-    <nav className="bg-[#191a3e] border-b border-gray-200 px-4 py-3 fixed left-0 right-0 top-0 z-50 shadow-md">
+    <nav className="bg-[#0e0e07] border-b border-gray-200 px-4 py-3 fixed left-0 right-0 top-0 z-50 shadow-md">
       <div className="flex flex-wrap  justify-between items-center">
         <div className="flex  justify-start items-center">
           <button

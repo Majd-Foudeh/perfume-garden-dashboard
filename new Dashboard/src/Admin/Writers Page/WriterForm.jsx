@@ -59,10 +59,10 @@ export const WriterForm = ({ setRefresh ,refresh}) => {
       <div className="flex items-center gap-5">
         <h1 className="text-[30px] font-bold py-2">Add New Author</h1>
         {!show ? (
-          <div className="tooltip tooltip-primary" data-tip=" add new Author">
+          <div className="tooltip tooltip-warning" data-tip=" add new Author">
             <button
               onClick={handleShow}
-              className="btn btn-primary btn-sm btn-circle "
+              className="btn bg-[#ffc107] btn-sm btn-circle "
             >
               <IoAddCircleOutline className="text-[20px] font-bold" />
             </button>
@@ -93,7 +93,7 @@ export const WriterForm = ({ setRefresh ,refresh}) => {
                 type="text"
                 name="name"
                 placeholder="Type here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 value={writerInfo.name}
                 onChange={handleChange}
               />
@@ -107,7 +107,7 @@ export const WriterForm = ({ setRefresh ,refresh}) => {
                 type="text"
                 name="job"
                 placeholder="Type here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 value={writerInfo.job}
                 onChange={handleChange}
               />
@@ -121,7 +121,7 @@ export const WriterForm = ({ setRefresh ,refresh}) => {
                 type="text"
                 name="description"
                 placeholder="Type here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 value={writerInfo.description}
                 onChange={handleChange}
               />
@@ -135,7 +135,7 @@ export const WriterForm = ({ setRefresh ,refresh}) => {
                 type="text"
                 name="image"
                 placeholder="Type here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 value={writerInfo.image}
                 onChange={handleChange}
               />
@@ -150,7 +150,7 @@ export const WriterForm = ({ setRefresh ,refresh}) => {
                 
                 name="link"
                 placeholder="Type Here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 value={writerInfo.link}
                 onChange={handleChange}
               />
@@ -162,7 +162,7 @@ export const WriterForm = ({ setRefresh ,refresh}) => {
               <label className="label invisible">
                 <span className="label-text">button</span>
               </label>
-              <button type="submit" className="btn btn-sm btn-primary">
+              <button type="submit" className="btn btn-sm bg-[#ffc107]">
                 Add
               </button>
             </div>

@@ -72,10 +72,10 @@ export const BookForm = ({ setRefresh, refresh }) => {
       <div className="flex items-center gap-5">
         <h1 className="text-[30px] font-bold py-2">Add New Perfume</h1>
         {!show ? (
-          <div className="tooltip tooltip-primary" data-tip=" add new book">
+          <div className="tooltip tooltip-warning" data-tip=" add new book">
             <button
               onClick={handleShow}
-              className="btn btn-primary btn-sm btn-circle "
+              className="btn bg-[#ffc107] btn-sm btn-circle "
             >
               <IoAddCircleOutline className="text-[20px] font-bold" />
             </button>
@@ -104,7 +104,7 @@ export const BookForm = ({ setRefresh, refresh }) => {
                 type="text"
                 name="perfume_name"
                 placeholder="Type here"
-                className="input input-sm  border-[#529b03] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 onChange={(e) => {
                   setPerfumeInfo({
                     ...perfumeInfo,
@@ -140,7 +140,7 @@ export const BookForm = ({ setRefresh, refresh }) => {
               </label>
               <select
                 id="small"
-                class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class=" block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 name="category"
                 onChange={(e) => {
                   setPerfumeInfo({
@@ -164,7 +164,7 @@ export const BookForm = ({ setRefresh, refresh }) => {
                 type="number"
                 name="price"
                 placeholder="Type here"
-                className="input input-sm  border-[#aaa831] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 onChange={(e) => {
                   setPerfumeInfo({
                     ...perfumeInfo,
@@ -182,7 +182,7 @@ export const BookForm = ({ setRefresh, refresh }) => {
                 type="text"
                 name="description"
                 placeholder="Type here"
-                className="input input-sm  border-[#9b9103] w-full max-w-xs"
+                className="input input-sm  border-[#ffc107] w-full max-w-xs"
                 onChange={(e) => {
                   setPerfumeInfo({
                     ...perfumeInfo,
@@ -247,7 +247,7 @@ export const BookForm = ({ setRefresh, refresh }) => {
             <label className="label invisible">
               <span className="label-text">button</span>
             </label>
-            <button type="submit" className="btn btn-sm btn-primary">
+            <button type="submit" className="btn btn-sm bg-[#ffc107]">
               Add
             </button>
           </div>

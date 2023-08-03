@@ -151,7 +151,7 @@ export const TableOfBooks = ({ refresh, setRefresh }) => {
         <div className="bg-white  relative shadow-md sm:rounded-2xl overflow-scroll max-h-[300px]">
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-gray-500 table-zebra ">
-              <thead className="text-xs text-white uppercase bg-[#529b03] ">
+              <thead className="text-xs text-black uppercase bg-[#ffc107] ">
                 <tr>
                   <th scope="col" className="px-4 py-3">
                     Perfume Name
